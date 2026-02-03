@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+{% include "nav.html" %}
+
     <h2>{{ product.name }}</h2>
 
     <img src="{{ product.image.url }}" width="300">
@@ -16,9 +18,8 @@
        {% if user.is_authenticated %}
             <form method="post">
                 {% csrf_token %}
-                <a href="{% url 'add_to_cart' product.id %}">
-                    Add to Cart
-                </a>
+               <a href="{% url 'add_to_cart' product.id %}">Add to cart</a>
+
             </form>
         {% else %}
             <a href="{% url 'login' %}">Login to Add to Cart</a>

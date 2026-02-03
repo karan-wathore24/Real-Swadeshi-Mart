@@ -4,6 +4,9 @@ from django.contrib.auth import login,authenticate,logout
 
 from .forms import SellerRegisterForm, CustomerRegisterForm
 
+from orders.models import Order
+
+
 # Create your views here.
 
 
@@ -46,21 +49,48 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
+            # ✅ ADMIN = direct admin panel
             if user.is_superuser:
                 return redirect('/admin/')
-            elif user.is_seller:
-                return redirect('seller_dashboard')
-            elif user.is_customer:
-                return redirect('home')
+
+            # ✅ respect ?next= for normal users
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+
+            # ✅ default = shop/home
+            return redirect('/')
+
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
 
-def customer_home(request):
-    return redirect('shop')
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def customer_dashboard(request):
+    return redirect('/')
+
 
 
 def logout_view(request):
     logout(request)     
     return redirect('login')
+
+
+@login_required
+def customer_dashboard(request):
+    user = request.user
+
+    # sirf customer allow
+    if not user.is_customer:
+        return redirect('/')
+
+    orders = Order.objects.filter(user=user).order_by('-created_at')
+
+    return render(request, 'accounts/customer_dashboard.html', {
+        'user': user,
+        'orders': orders
+    })
