@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "nav.html" %}
+
+    <h2>Your Cart</h2>
+
+        {% for item in cart_items %}
+            <p>
+                {{ item.product.name }} —
+                ₹{{ item.product.price }} × {{ item.quantity }}
+            </p>
+        {% empty %}
+            <p>Your cart is empty</p>
+        {% endfor %}
+
+        <hr>
+        <h3>Total: ₹{{ total }}</h3>
+
+</body>
+</html>

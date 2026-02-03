@@ -20,13 +20,13 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('accounts.urls')),
-    path('seller/',include('seller.urls')),
-    path('', include('products.urls')),
+    path('', include('product.urls')),
 
-
+    path('seller/', include('seller.urls')),
+    path('accounts/', include('accounts.urls')),  
+    path('cart/', include('cart.urls')),
 
 ]
 if settings.DEBUG:
