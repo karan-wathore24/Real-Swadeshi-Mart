@@ -51,14 +51,15 @@ def login_view(request):
             elif user.is_seller:
                 return redirect('seller_dashboard')
             elif user.is_customer:
-                return redirect('customer_home')
+                return redirect('shop')
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
-            
+
 def customer_home(request):
-    return HttpResponse("Customer Home Page")
+    return redirect('shop')
+
 
 def logout_view(request):
     logout(request)     

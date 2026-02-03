@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Registertion</title>
+    <title>Document</title>
 </head>
 <body>
     {% include "nav.html" %}
-    <h2>customer Register</h2>
-    <form method="post">
+    <h2>Edit Product</h2>
+
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register as customer</button>
+        <button type="submit">Update</button>
     </form>
 
 </body>

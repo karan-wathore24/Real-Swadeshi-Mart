@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <a href="{% url 'product_detail' product.id %}">
+        <img src="{{ product.image.url }}" width="100%">
+    </a>
+
+    <h4>
+    <a href="{% url 'product_detail' product.id %}">
+        {{ product.name }}
+    </a>
+    </h4>
+    <p>₹ {{ product.price }}</p>
+
+</body>
+</html>
