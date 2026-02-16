@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "nav.html" %}
+
+        <h2>My Orders</h2>
+
+        {% if orders %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Order ID</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>₹ {{ order.total_price }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at }}</td>
+                <td>
+                    <a href="{% url 'order_detail' order.id %}">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No orders yet.</p>
+        {% endif %}
+</body>
+</html>

@@ -80,7 +80,19 @@
               </ul>
             </li>
 
+                {% endif %}
+                {% if user.is_authenticated and user.is_customer %}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Shop</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/accounts/my-orders/">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
         {% endif %}
+
 
       </ul>
     </div>

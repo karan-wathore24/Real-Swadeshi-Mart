@@ -94,3 +94,19 @@ def customer_dashboard(request):
         'user': user,
         'orders': orders
     })
+
+
+@login_required
+def customer_orders(request):
+    if not request.user.is_customer:
+        return redirect('/')
+
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+    return render(request, 'accounts/my_orders.html', {
+        'orders': orders
+    })
+@login_required
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'accounts/my_orders.html', {'orders': orders})
