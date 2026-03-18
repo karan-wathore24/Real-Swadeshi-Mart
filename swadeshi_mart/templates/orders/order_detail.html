@@ -8,13 +8,48 @@
 <body>
     {% include "nav.html" %}
 
-    <h2>Order #{{ order.id }}</h2>
+<div class="container mt-4">
 
-    <p><strong>Total:</strong> ₹ {{ order.total_price }}</p>
+    <h2>Order #{{ order.id }}</h2>
     <p><strong>Status:</strong> {{ order.status }}</p>
     <p><strong>Date:</strong> {{ order.created_at }}</p>
+    <p><strong>Total:</strong> ₹{{ order.total_price }}</p>
 
-    <a href="/accounts/my-orders/">Back to Orders</a>
+    <hr>
+
+    <h4>Items</h4>
+
+    {% if order.items.all %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>₹{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No items found in this order.</p>
+    {% endif %}
+
+    <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">
+        Back to Dashboard
+    </a>
+
+</div>
+
 
 </body>
 </html>

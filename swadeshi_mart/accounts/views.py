@@ -80,21 +80,21 @@ def logout_view(request):
     return redirect('login')
 
 
+
 @login_required
 def customer_dashboard(request):
-    user = request.user
 
-    # sirf customer allow
-    if not user.is_customer:
+    if not request.user.is_customer:
         return redirect('/')
 
-    orders = Order.objects.filter(user=user).order_by('-created_at')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+    total_orders = orders.count()
 
     return render(request, 'accounts/customer_dashboard.html', {
-        'user': user,
-        'orders': orders
+        'orders': orders,
+        'total_orders': total_orders
     })
-
 
 @login_required
 def customer_orders(request):

@@ -12,34 +12,26 @@
 <hr>
 
 <h3>My Profile</h3>
-<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Email:</strong> {{ user.username }}</p>
 <p><strong>Role:</strong> Customer</p>
 
 <hr>
 
-<h3>My Orders</h3>
+<h4>My Orders</h4>
 
-{% if orders %}
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Order ID</th>
-        <th>Total</th>
-        <th>Status</th>
-        <th>Date</th>
-    </tr>
-
+<ul>
     {% for order in orders %}
-    <tr>
-        <td>{{ order.id }}</td>
-        <td>₹ {{ order.total_price }}</td>
-        <td>{{ order.status }}</td>
-        <td>{{ order.created_at }}</td>
-    </tr>
+        <li>
+            <a href="{% url 'order_detail' order.id %}">
+                Order #{{ order.id }}
+            </a>
+            - ₹{{ order.total_price }}
+            - {{ order.status }}
+        </li>
+    {% empty %}
+        <li>No orders yet</li>
     {% endfor %}
-</table>
-{% else %}
-<p>No orders yet.</p>
-{% endif %}
+</ul>
 
 </body>
 </html>
